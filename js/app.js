@@ -1,6 +1,5 @@
 
 //Print the first 5 names of the meals in alphabetical order
-/*
 
 // Skapa en lista med bokstäver (a–ö)
 const letters = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','x','y','z','å','ä','ö'];
@@ -31,12 +30,15 @@ async function getMeals() {
 
   //  console logga namnen
   firstFive.forEach(meal => console.log(meal.strMeal));
+
 }
 // Kör funktionen
 getMeals();
-*/
-/*
+
+
 // Print all meals that contain a given category
+
+// Skapa en lista med bokstäver (a–ö)
 
 async function getMealsByCategory(category) {
   const letters = 'abcdefghijklmnopqrstuvwxyz'.split('');
@@ -67,34 +69,29 @@ async function getMealsByCategory(category) {
 }
 // kör funktionen med given kategori
 getMealsByCategory("Dessert");
-/*
 
 
- */
 //Create a Javascript object that contains how many times a meals of a each category appears
 
+// Skapa en lista med bokstäver (a–ö)
 async function countMealsByCategory() {
   const letters = 'abcdefghijklmnopqrstuvwxyz'.split('');
-  let allMeals = [];
 
-  // hämta måltider för varje bokstav
-  for (let letter of letters) {
-    const res = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?f=${letter}`);
-    const data = await res.json();
-    if (data.meals) {
-      allMeals = allMeals.concat(data.meals);
-    }
-  }
-  // reducera till kategorier
-  const categoryCount = allMeals.reduce((acc, meal) => {
-    const category = meal.strCategory;
-    if (!acc[category]) {
-      acc[category] = 1;
-    } else {
-      acc[category]++;
-    }
-    return acc;
-  }, {});
+  const allMeals = (await Promise.all(
+    letters.map(async letter => {
+      const res = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?f=${letter}`);
+      const data = await res.json();
+      return data.meals || [];
+    })
+  )).flat();
+
+  // Räkna antal per kategori
+  const categoryCount = allMeals
+    .reduce((acc, m) => {
+      acc[m.strCategory] = (acc[m.strCategory] || 0) + 1;
+      return acc;
+    }, {});
+
   console.log(categoryCount);
 }
 countMealsByCategory();
