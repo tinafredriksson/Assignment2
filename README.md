@@ -29,5 +29,34 @@ Till sist console.loggar vi ut texten och kör vår funktion countMealsByCategor
 
 
 Kodbeskrivning Stretch Goals (VG))
+Steg 1 i koden skapar en array med bokstäverna a-z (promise.all) hämtar alla rätter
+vars namn börja på varje bokstav.Resultatet konverteras till JSON som sedan returnerar en
+array (data.meals). flat() gör den till en enda stor lista, sedan filtreras trasiga/null poster.
+return result, returnerar alla måltider (array) av meal-objekt.
+steg 2 grupperingsfunktion som hämtar (key) från kategorin ex dessert/chicken,
+vilket sen resulterar i ett objekt.
+steg3 TheMealDB lagrar sedan ingredienser (strIngredient)
+TheMealDB lagrar ingredienser som strIngredient1..20.
+Det körs i en loop 1→20 och plockar ut icke tomma värden. Anledningen att den loopas upp till
+ingrediens 20 är för att API-strukturen i theMealDb kan varje recept ha upptill 20 ingredienser
+färav atyt den loopas upp till 20. Sedan returneras en array av ingrediensnamn för respektive måltid
+med upptill max 20 ingredienser.
+Steg 4 mapMealSummary, gör om “stora” meal-objekt till kompakta sammanfattningar,
+GetMealSummarys() hämtar alla måltider och mappar igenom funktionen mapMealSummary.
+Steg 5 buildIngredientFrequency är en funktion som räknar hur många gånger varje
+ingrediens förekommer i alla måltider.normalize:true, räknar Onion” och “onion” som samma (gemener).
+Sedan returneras ett objekt där varje ingrediens
+Returnerar ett objekt som: "onion:45"
+Sista steget kör funktionen genom att först hämta data fetchAllmeals, sedan skapar
+sammanfattningar som id, namn, kategori och ingredienserna. Grupperar per kategori samt
+antal per kategori loggas samt antal per ursprungsområde loggas.
+5 sammanfattningar skrivs ut med id,namn,kategori samt upptill 20 ingredienser.
+Ingrediensfrekvens loggas med top 10 i antal 1.a Butter 2.a garlic osv...
+
+
+
+
+
+
 
 

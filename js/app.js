@@ -71,7 +71,7 @@ async function getMealsByCategory(category) {
 getMealsByCategory("Dessert");
 
 
-//Create a Javascript object that contains how many times a meals of a each category appears
+//Create a Javascript object that contains how many times a meals of each category appears
 
 // Skapa en lista med bokstäver (a–ö)
 async function countMealsByCategory() {

@@ -58,30 +58,39 @@ function buildIngredientFrequency(summaries, { normalize = true } = {}) {
 }
 
 // Demo: kör alla stegen
+
+//ingrediensfrekvens (topp 10)
+function printTopN(obj, n = 10, title = 'Top') {
+  console.log(title);
+  Object.entries(obj)
+    .sort((a, b) => b[1] - a[1])   // sortera fallande på count
+    .slice(0, n)                   // ta topp n
+    .forEach(([k, v]) => console.log(`${k}: ${v}`));
+}
 async function run() {
   // Hämta original-meals (fulla objekt) och summaries (kompakta)
   const allMeals = await fetchAllMeals();
   const summaries = allMeals.map(mapMealSummary);
 
-  // ---- 1) Group by a key ----
+  // 1) Grupperar per nyckel
   const byCategory = groupBy(allMeals, 'strCategory'); // grupp på original (valfritt)
   const byArea = groupBy(allMeals, 'strArea');
-
+// skriver ut i konsollen antal/kategori
   console.log('Antal per kategori:');
   for (const [cat, list] of Object.entries(byCategory)) {
     console.log(`${cat}: ${list.length}`);
   }
-
+// skriver ut i konsollen antal/area
   console.log('\nAntal per area:');
   for (const [area, list] of Object.entries(byArea)) {
     console.log(`${area}: ${list.length}`);
   }
 
-  // ---- 2) Select & reshape ----
+  //  2) Select & reshape
   console.log('\nExempel på 5 sammanfattningar:');
   console.log(summaries.slice(0, 5));
 
-  // ---- 3) Frequency map ----
+  // 3) Frequency map
   const ingredientFreq = buildIngredientFrequency(summaries, { normalize: true });
   console.log('\nIngrediensfrekvens (topp 10):');
   printTopN(ingredientFreq, 10, '(ingrediens: antal)');
